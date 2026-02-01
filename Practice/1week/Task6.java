@@ -8,7 +8,11 @@ public class Task6 {
 
         String str = scanner.nextLine();
 
-        String revstr = new StringBuilder(str).reverse().toString();
+        String revstr = "";
+
+        for (int i = str.length() - 1; i >= 0; i--) {
+            revstr += str.charAt(i);
+        }
 
         if (str.equals(revstr)) {
             System.out.println("Palindrome");

@@ -1,5 +1,5 @@
 public static void main(String[] args) {
-
+  
   String name = "Alisher";
 
   String borders = "+" + "-".repeat(name.length()) + "+";

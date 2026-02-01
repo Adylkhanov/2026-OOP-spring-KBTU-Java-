@@ -15,7 +15,7 @@ public class Task4 {
         System.out.print("c: ");
         c = sc.nextInt();
 
-        int d = b * b - 4 * a * c;
+        int d = (b * b) - (4 * a * c);
 
         if (d > 0) {
             System.out.println("Two real roots");
