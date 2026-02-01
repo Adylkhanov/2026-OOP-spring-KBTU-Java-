@@ -1,3 +1,5 @@
+
+public class Task1 {
 public static void main(String[] args) {
   
   String name = "Alisher";
@@ -8,4 +10,6 @@ public static void main(String[] args) {
   System.out.println(borders);
   System.out.println(full_name);
   System.out.println(borders);
+}
+
 }

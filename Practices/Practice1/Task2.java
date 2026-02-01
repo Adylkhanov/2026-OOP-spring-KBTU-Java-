@@ -1,4 +1,7 @@
+package Practice1;
 import java.util.Scanner;
+
+public class Task2 {
 public static void main(String[] args) {
 
     Scanner scanne = new Scanner(System.in);
@@ -17,4 +20,5 @@ public static void main(String[] args) {
     scanne.close();
     
 
+}
 }
