@@ -1,4 +1,4 @@
-package Practice2;
+package Practice.Practice2;
 
 public class Task2 {
 
@@ -6,7 +6,7 @@ public class Task2 {
 
         Triangle triangle = new Triangle(5);
 
-        System.out.println(triangle.toString());
+        System.out.println(triangle);
     }
 
 }
@@ -21,13 +21,11 @@ class Triangle {
         if (length <= 0) {
             throw new IllegalArgumentException("Length must be positive");
         }
+
         this.length = length;
 
     }
 
-
-
-    @Override
     public String toString() {
 
         String result = "";
@@ -42,10 +40,7 @@ class Triangle {
             result += "\n";
         }
 
-
         return result;
-
-
 
     }
 

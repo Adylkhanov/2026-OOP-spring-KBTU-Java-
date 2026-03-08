@@ -1,4 +1,4 @@
-package Practice2;
+package Practice.Practice2;
 
 public class Task3 {
 
@@ -71,6 +71,7 @@ class Time {
     }
 
     public String add(Time otherTime) {
+        
         int totalSeconds = this.seconds + otherTime.seconds;
         int totalMinutes = this.minutes + otherTime.minutes + (totalSeconds / 60);
         int totalHours = this.hours + otherTime.hours + (totalMinutes / 60);
