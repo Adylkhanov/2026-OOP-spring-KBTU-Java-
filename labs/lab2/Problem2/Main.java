@@ -3,28 +3,32 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Board board = new Board();
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         while (true) {
-            board.draw();
-            System.out.println("Введите ход (x1 y1 x2 y2) или 'exit':");
-            String input = scanner.nextLine();
-            
-            if (input.equals("exit")) break;
+            board.printBoard();
 
-            String[] parts = input.split(" ");
-            int x1 = Integer.parseInt(parts[0]);
-            int y1 = Integer.parseInt(parts[1]);
-            int x2 = Integer.parseInt(parts[2]);
-            int y2 = Integer.parseInt(parts[3]);
+            System.out.println("Enter move: fromRow fromCol toRow toCol");
+            System.out.println("Example: 1 0 2 0");
+            System.out.print("> ");
 
-            if (board.movePiece(x1, y1, x2, y2)) {
-                System.out.println("Ход выполнен!");
+            int fr = sc.nextInt();
+            int fc = sc.nextInt();
+            int tr = sc.nextInt();
+            int tc = sc.nextInt();
+
+            Position from = new Position(fr, fc);
+            Position to = new Position(tr, tc);
+
+            boolean moved = board.move(from, to);
+
+            if (moved) {
+                System.out.println("Move done.");
             } else {
-                System.out.println("Недопустимый ход!");
+                System.out.println("Move failed.");
             }
         }
 
-        scanner.close();
     }
+
 }

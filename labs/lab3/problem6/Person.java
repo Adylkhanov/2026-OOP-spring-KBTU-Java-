@@ -1,8 +1,9 @@
-package labs.lab2.Problem5;
+package labs.lab3.problem6;
 
 import java.util.Objects;
 
-public abstract class Person {
+public abstract class Person implements Cloneable, Comparable<Person>, Moveable {
+
     private String name;
     private int age;
     private Animal pet;
@@ -72,4 +73,24 @@ public abstract class Person {
     public int hashCode() {
         return Objects.hash(name, age, pet);
     }
+
+    @Override
+    public int compareTo(Person other) {
+        return this.age - other.age; 
+    }
+
+    @Override
+    public void move() {
+        System.out.println(name + " is walking with the pet.");
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Person cloned = (Person) super.clone();
+        if (this.pet != null) {
+            cloned.pet = (Animal) this.pet.clone();
+        }
+        return cloned;
+    }
+    
 }

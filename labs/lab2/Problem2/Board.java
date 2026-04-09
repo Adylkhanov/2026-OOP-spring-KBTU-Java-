@@ -1,86 +1,89 @@
 public class Board {
-    private Piece[][] grid = new Piece[8][8];
+    private Piece[][] board;
 
     public Board() {
-        setupBoard();
+        board = new Piece[8][8];
+        initialize();
     }
-    public void draw() {
-    System.out.println("   0  1  2  3  4  5  6  7");
-    for (int i = 0; i < 8; i++) {
-        System.out.print(i + " ");
-        for (int j = 0; j < 8; j++) {
-            Piece p = grid[i][j];
-            if (p == null) {
-                System.out.print("[ ]");
-            } else {
-                char symbol = p.getClass().getSimpleName().charAt(0);
-                // Белые — заглавные, черные — строчные
-                symbol = p.isWhite ? Character.toUpperCase(symbol) : Character.toLowerCase(symbol);
-                System.out.print("[" + symbol + "]");
-            }
+
+    private void initialize() {
+        
+        board[0][0] = new Rook(new Position(0, 0), Color.WHILE);
+        board[0][1] = new Knight(new Position(0, 1), Color.WHILE);
+        board[0][2] = new Bishop(new Position(0, 2), Color.WHILE);
+        board[0][3] = new Queen(new Position(0, 3), Color.WHILE);
+        board[0][4] = new King(new Position(0, 4), Color.WHILE);
+        board[0][5] = new Bishop(new Position(0, 5), Color.WHILE);
+        board[0][6] = new Knight(new Position(0, 6), Color.WHILE);
+        board[0][7] = new Rook(new Position(0, 7), Color.WHILE);
+
+        for (int i = 0; i < 8; i++) {
+            board[1][i] = new Pawn(new Position(1, i), Color.WHILE);
         }
-        System.out.println();
-    }
-}
 
-    private void setupBoard() {
        
-        grid[0][0] = new Rook(new Position(0, 0), true);
-        grid[0][7] = new Rook(new Position(0, 7), true);
-        grid[0][1] = new Horse(new Position(0, 1), true);
-        grid[0][6] = new Horse(new Position(0, 6), true);
-        grid[0][2] = new Bishop(new Position(0, 2), true);
-        grid[0][5] = new Bishop(new Position(0, 5), true);
-        grid[0][3] = new Queen(new Position(0, 3), true);
-        grid[0][4] = new King(new Position(0, 4), true);
-        for (int i = 0; i < 8; i++) grid[1][i] = new Pawn(new Position(1, i), true);
+        board[7][0] = new Rook(new Position(7, 0), Color.BLACK);
+        board[7][1] = new Knight(new Position(7, 1), Color.BLACK);
+        board[7][2] = new Bishop(new Position(7, 2), Color.BLACK);
+        board[7][3] = new Queen(new Position(7, 3), Color.BLACK);
+        board[7][4] = new King(new Position(7, 4), Color.BLACK);
+        board[7][5] = new Bishop(new Position(7, 5), Color.BLACK);
+        board[7][6] = new Knight(new Position(7, 6), Color.BLACK);
+        board[7][7] = new Rook(new Position(7, 7), Color.BLACK);
 
-    
-        grid[7][0] = new Rook(new Position(7, 0), false);
-        grid[7][7] = new Rook(new Position(7, 7), false);
-        grid[7][1] = new Horse(new Position(7, 1), false);
-        grid[7][6] = new Horse(new Position(7, 6), false);
-        grid[7][2] = new Bishop(new Position(7, 2), false);
-        grid[7][5] = new Bishop(new Position(7, 5), false);
-        grid[7][3] = new Queen(new Position(7, 3), false);
-        grid[7][4] = new King(new Position(7, 4), false);
-        for (int i = 0; i < 8; i++) grid[6][i] = new Pawn(new Position(6, i), false);
+        for (int i = 0; i < 8; i++) {
+            board[6][i] = new Pawn(new Position(6, i), Color.BLACK);
+        }
     }
 
-    private boolean isPathClear(int x1, int y1, int x2, int y2) {
-        int dx = Integer.compare(x2, x1); // Возвращает 1, -1 или 0
-        int dy = Integer.compare(y2, y1);
-
-        int currX = x1 + dx;
-        int currY = y1 + dy;
-
-        while (currX != x2 || currY != y2) {
-                  if (grid[currX][currY] != null) return false;
-                    currX += dx;
-                    currY += dy;
+    public void printBoard() {
+        System.out.println("  0 1 2 3 4 5 6 7");
+        for (int i = 0; i < 8; i++) {
+            System.out.print(i + " ");
+            for (int j = 0; j < 8; j++) {
+                if (board[i][j] == null) {
+                    System.out.print(". ");
+                } else {
+                    System.out.print(board[i][j].getSymbol() + " ");
+                }
+            }
+            System.out.println();
+        }
     }
-    return true;
-}
 
-public boolean movePiece(int x1, int y1, int x2, int y2) {
-    // 1. Проверка границ доски
-    if (x1 < 0 || x1 > 7 || y1 < 0 || y1 > 7 || x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7) return false;
+    private boolean isInside(Position p) {
+        return p.row >= 0 && p.row < 8 && p.col >= 0 && p.col < 8;
+    }
 
-    Piece p = grid[x1][y1];
-    if (p == null) return false;
+    public boolean move(Position from, Position to) {
+        if (!isInside(from) || !isInside(to)) {
+            System.out.println("Out of board!");
+            return false;
+        }
 
-    // 2. Проверка: ходит ли фигура по своим правилам?
-    if (!p.isLegalMove(new Position(x2, y2))) return false;
+        Piece piece = board[from.row][from.col];
 
-    // 3. Проверка: свободен ли путь? (Конь игнорирует эту проверку)
-    if (!(p instanceof Horse) && !isPathClear(x1, y1, x2, y2)) return false;
+        if (piece == null) {
+            System.out.println("No piece at starting position!");
+            return false;
+        }
 
-    // 4. Выполнение хода
-    grid[x2][y2] = p;
-    grid[x1][y1] = null;
-    p.a = new Position(x2, y2);
+        if (!piece.isLegalMove(to)) {
+            System.out.println("Illegal move for this piece!");
+            return false;
+        }
 
-    
-    return true;
-}
+        Piece target = board[to.row][to.col];
+
+        if (target != null && target.getColor() == piece.getColor()) {
+            System.out.println("You cannot capture your own piece!");
+            return false;
+        }
+
+        board[to.row][to.col] = piece;
+        board[from.row][from.col] = null;
+        piece.setPosition(to);
+
+        return true;
+    }
 }

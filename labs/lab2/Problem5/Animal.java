@@ -16,7 +16,7 @@ public abstract class Animal {
     public String toString() {
         return "Name " + name +
                 "age " + age + 
-                "Type " + this.getClass();
+                "Type " + this.getClass(); 
     }
 
     

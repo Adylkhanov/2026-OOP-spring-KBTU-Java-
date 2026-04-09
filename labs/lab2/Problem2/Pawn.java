@@ -1,19 +1,21 @@
 public class Pawn extends Piece {
-    public Pawn(Position a, boolean isWhite) { super(a, isWhite); }
+
+    public Pawn(Position a, Color color) {
+        super(a, color);
+    }
 
     @Override
     public boolean isLegalMove(Position b) {
-        int direction = isWhite ? -1 : 1; 
-        
-  
-        if (a.y == b.y && b.x - a.x == direction) {
-            return true;
+
+        return b.col == a.col && b.row == a.row + 1;
+    }
+
+    @Override
+    public char getSymbol() {
+        if (this.color == Color.WHILE) {
+            return 'P';
         }
-       
-        int startRow = isWhite ? 6 : 1;
-        if (a.x == startRow && a.y == b.y && b.x - a.x == 2 * direction) {
-            return true;
-        }
-        return false;
+        return 'p';
+
     }
 }

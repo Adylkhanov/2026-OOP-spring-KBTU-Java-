@@ -3,24 +3,31 @@ package labs.lab2.Problem5;
 public class Main {
 
     public static void main(String[] args) {
-        Person alisher = new Employee("Alisher", 19, 10000, "Senior ML");
-        Person anelya = new Student("Anelya", 19, 3.5, "Management", "MNU");
+        Person harry = new Employee("Harry Potter", 20, 100000, "Manad security engineer");
+        Person ron = new Student("Ron Wisley", 19, 1.488,
+                "studying Magic Learning at KMTU(Kazakh - Magical Technical University",
+                "MTU(Kazakh - Magic Technical University)");
+        Person germiona = new PhDStudent("Germiona Grandjer", 19, "Arcane-magic:", "Dark magic mental influence");
 
         Animal pikachu = new Pikachu("Pika", 1);
-        alisher.assignPet(pikachu);
+        Animal dogman = new Dog("Rex", 10);
 
         PersonRegistry registry = new PersonRegistry();
 
-        registry.addPerson(alisher);
-        registry.addPerson(anelya);
+        registry.addPerson(harry);
+        registry.addPerson(ron);
+        registry.addPerson(germiona);
 
-        alisher.leavePetWith(anelya);
+        harry.assignPet(pikachu);
+        harry.leavePetWith(ron);
+
+        System.out.println(registry);
+
+        harry.retrivePetFrom(ron);
 
         System.out.println(registry);
 
-        alisher.retrivePetFrom(anelya);
-
-        System.out.println(registry);
+        germiona.assignPet(dogman);
 
     }
 
